@@ -8,7 +8,7 @@ import { Flight } from '../../model/flight';
 @Injectable({
   providedIn: 'root'
 })
-export abstract class FlightService {
+export class FlightService {
   private http = inject(HttpClient);
   private baseUrl = inject(BASE_URL);
 
