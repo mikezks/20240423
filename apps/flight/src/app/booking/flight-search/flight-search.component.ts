@@ -1,12 +1,17 @@
 import { Component, inject } from '@angular/core';
 import { Flight } from '../../model/flight';
 import { FlightService } from '../services/flight.service';
+import { FlightCardComponent } from '../flight-card/flight-card.component';
+import { NgIf, NgFor, JsonPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-flight-search',
-  templateUrl: './flight-search.component.html',
-  styleUrl: './flight-search.component.scss'
+    selector: 'app-flight-search',
+    templateUrl: './flight-search.component.html',
+    styleUrl: './flight-search.component.scss',
+    standalone: true,
+    imports: [FormsModule, NgIf, NgFor, FlightCardComponent, JsonPipe]
 })
 export class FlightSearchComponent {
   private flightService = inject(FlightService);

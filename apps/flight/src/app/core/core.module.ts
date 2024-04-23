@@ -8,18 +8,16 @@ import { CoreRoutingModule } from './core-routing.module';
 
 
 @NgModule({
-  declarations: [
-    HeaderbarComponent,
-    SidebarComponent,
-    HomeComponent
-  ],
-  imports: [
-    CommonModule,
-    CoreRoutingModule
-  ],
-  exports: [
-    HeaderbarComponent,
-    SidebarComponent
-  ]
+    imports: [
+        CommonModule,
+        CoreRoutingModule,
+        HeaderbarComponent,
+        SidebarComponent,
+        HomeComponent
+    ],
+    exports: [
+          HeaderbarComponent,
+          SidebarComponent
+    ]
 })
 export class CoreModule {}

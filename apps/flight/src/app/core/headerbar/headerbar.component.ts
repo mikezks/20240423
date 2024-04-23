@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 
 
 @Component({
-  selector: 'app-headerbar-cmp',
-  templateUrl: 'headerbar.component.html'
+    selector: 'app-headerbar-cmp',
+    templateUrl: 'headerbar.component.html',
+    standalone: true
 })
 export class HeaderbarComponent {
   sidebarVisible = false;

@@ -1,14 +1,17 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { validateCity, validateCityWithParams } from '../../shared/validation/city-validator';
 import { FlightService } from '../services/flight.service';
+import { NgIf, JsonPipe } from '@angular/common';
 
 
 @Component({
-  selector: 'app-flight-edit',
-  templateUrl: './flight-edit.component.html',
-  styleUrl: './flight-edit.component.scss'
+    selector: 'app-flight-edit',
+    templateUrl: './flight-edit.component.html',
+    styleUrl: './flight-edit.component.scss',
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule, NgIf, JsonPipe]
 })
 export class FlightEditComponent {
   private fb = inject(FormBuilder);

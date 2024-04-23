@@ -9,17 +9,15 @@ import { FlightEditComponent } from './flight-edit/flight-edit.component';
 
 
 @NgModule({
-  declarations: [
-    FlightEditComponent,
-    FlightSearchComponent
-  ],
-  imports: [
-    CommonModule,
-    BookingRoutingModule,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    FlightCardComponent
-  ]
+    imports: [
+        CommonModule,
+        BookingRoutingModule,
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        FlightCardComponent,
+        FlightEditComponent,
+        FlightSearchComponent
+    ]
 })
 export class BookingModule {}
