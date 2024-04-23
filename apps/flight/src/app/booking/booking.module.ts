@@ -10,7 +10,6 @@ import { FlightEditComponent } from './flight-edit/flight-edit.component';
 
 @NgModule({
   declarations: [
-    FlightCardComponent,
     FlightEditComponent,
     FlightSearchComponent
   ],
@@ -19,7 +18,8 @@ import { FlightEditComponent } from './flight-edit/flight-edit.component';
     BookingRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FlightCardComponent
   ]
 })
 export class BookingModule {}

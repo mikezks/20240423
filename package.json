@@ -2,7 +2,9 @@
   "name": "@flight-demo/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "nx serve flight"
+  },
   "private": true,
   "dependencies": {
     "@angular-architects/module-federation": "^17.0.8",
