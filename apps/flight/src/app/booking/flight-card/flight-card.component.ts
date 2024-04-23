@@ -1,15 +1,15 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { initialFlight } from '../../model/flight';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { DatePipe, NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-flight-card',
   standalone: true,
   imports: [
-    CommonModule,
-    RouterModule
+    NgClass, DatePipe,
+    RouterLink
   ],
   template: `
     <div
