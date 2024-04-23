@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
-import { NgIf, JsonPipe } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 
 
 export type Error = Record<string, unknown>;
@@ -10,7 +10,7 @@ export type Error = Record<string, unknown>;
     templateUrl: './validation-errors.component.html',
     styleUrls: ['./validation-errors.component.css'],
     standalone: true,
-    imports: [NgIf, JsonPipe],
+    imports: [JsonPipe],
 })
 export class ValidationErrorsComponent implements OnChanges {
   @Input() errors: ValidationErrors = {};

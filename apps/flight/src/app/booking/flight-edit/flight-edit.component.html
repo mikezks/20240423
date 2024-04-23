@@ -16,51 +16,58 @@
         <label>From:</label>
         <input formControlName="from" class="form-control">
       </div>
-      <div
-        *ngIf="editForm.controls.from.invalid"
-        class="alert alert-danger"
-      >
-        From control is not valid.
-      </div>
-      <div
-        *ngIf="editForm.controls.from.hasError('required')"
-        class="alert alert-danger"
-      >
-        From control is mandatory - please enter a value.
-      </div>
-      <div
-        *ngIf="editForm.controls.from.hasError('minlength')"
-        class="alert alert-danger"
-      >
-        From control needs to have at least
-        {{ editForm.controls.from.errors?.['minlength']?.requiredLength }}
-        chars entered.
-      </div>
-      <div
-        *ngIf="editForm.controls.from.hasError('city')"
-        class="alert alert-danger"
-      >
-        From control uses an invalid city.<br>
-        Please enter one of those cities:<br>
-        {{ editForm.controls.from.errors?.['city']?.validCities.join(', ') }}
-      </div>
-      <div *ngIf="editForm.controls.from.errors">
-        <pre>{{ editForm.controls.from.errors | json }}</pre>
-      </div>
+      @if (editForm.controls.from.invalid) {
+        <div
+          class="alert alert-danger"
+          >
+          From control is not valid.
+        </div>
+      }
+      @if (editForm.controls.from.hasError('required')) {
+        <div
+          class="alert alert-danger"
+          >
+          From control is mandatory - please enter a value.
+        </div>
+      }
+      @if (editForm.controls.from.hasError('minlength')) {
+        <div
+          class="alert alert-danger"
+          >
+          From control needs to have at least
+          {{ editForm.controls.from.errors?.['minlength']?.requiredLength }}
+          chars entered.
+        </div>
+      }
+      @if (editForm.controls.from.hasError('city')) {
+        <div
+          class="alert alert-danger"
+          >
+          From control uses an invalid city.<br>
+          Please enter one of those cities:<br>
+          {{ editForm.controls.from.errors?.['city']?.validCities.join(', ') }}
+        </div>
+      }
+      @if (editForm.controls.from.errors) {
+        <div>
+          <pre>{{ editForm.controls.from.errors | json }}</pre>
+        </div>
+      }
 
 
       <div class="form-group">
         <label>To:</label>
         <input formControlName="to" class="form-control">
       </div>
-      <div
-        *ngIf="editForm.controls.to.hasError('city')"
-        class="alert alert-danger"
-      >
-        To control uses an invalid city.<br>
-        Please enter one of those cities:<br>
-        {{ editForm.controls.to.errors?.['city']?.validCities.join(', ') }}
-      </div>
+      @if (editForm.controls.to.hasError('city')) {
+        <div
+          class="alert alert-danger"
+          >
+          To control uses an invalid city.<br>
+          Please enter one of those cities:<br>
+          {{ editForm.controls.to.errors?.['city']?.validCities.join(', ') }}
+        </div>
+      }
 
       <div class="form-group">
         <label>Date:</label>
@@ -70,7 +77,7 @@
         <button
           (click)="save()"
           class="btn btn-default"
-        >
+          >
           Save
         </button>
       </div>

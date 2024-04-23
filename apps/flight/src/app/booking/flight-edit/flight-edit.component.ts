@@ -3,7 +3,7 @@ import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { validateCity, validateCityWithParams } from '../../shared/validation/city-validator';
 import { FlightService } from '../services/flight.service';
-import { NgIf, JsonPipe } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { NgIf, JsonPipe } from '@angular/common';
     templateUrl: './flight-edit.component.html',
     styleUrl: './flight-edit.component.scss',
     standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, NgIf, JsonPipe]
+    imports: [FormsModule, ReactiveFormsModule, JsonPipe]
 })
 export class FlightEditComponent {
   private fb = inject(FormBuilder);

@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, Injector, inject, runInInjectionContext } from '@angular/core';
 import { Flight } from '../../model/flight';
 import { FlightService } from '../services/flight.service';
 import { FlightCardComponent } from '../flight-card/flight-card.component';
-import { NgIf, NgFor, JsonPipe } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 
@@ -11,10 +11,11 @@ import { FormsModule } from '@angular/forms';
     templateUrl: './flight-search.component.html',
     styleUrl: './flight-search.component.scss',
     standalone: true,
-    imports: [FormsModule, NgIf, NgFor, FlightCardComponent, JsonPipe]
+    imports: [FormsModule, FlightCardComponent, JsonPipe]
 })
 export class FlightSearchComponent {
   private flightService = inject(FlightService);
+  private injector = inject(Injector);
 
   from = 'Hamburg';
   to = 'Graz';
@@ -24,7 +25,17 @@ export class FlightSearchComponent {
     5: true
   };
 
+  constructor() {
+    inject(FlightService);
+  }
+
   search(): void {
+
+    this.injector.get(FlightService);
+    runInInjectionContext(this.injector,
+      () => inject(FlightService)
+    );
+
     this.flightService?.find(this.from, this.to)
       .subscribe(
         flights => this.flights = flights
