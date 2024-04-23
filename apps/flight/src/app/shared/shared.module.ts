@@ -5,16 +5,14 @@ import { ValidationErrorsComponent } from './validation/validation-errors/valida
 
 
 @NgModule({
-  declarations: [
-    CityPipe,
-    ValidationErrorsComponent
-  ],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    CityPipe,
-    ValidationErrorsComponent
-  ]
+    imports: [
+        CommonModule,
+        CityPipe,
+        ValidationErrorsComponent
+    ],
+    exports: [
+        CityPipe,
+        ValidationErrorsComponent
+    ]
 })
 export class SharedModule {}
