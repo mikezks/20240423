@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, booleanAttribute, effect, inject, input, numberAttribute, untracked } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { validateCity, validateCityWithParams } from '../../shared/validation/city-validator';
 import { FlightService } from '../services/flight.service';
 import { JsonPipe } from '@angular/common';
+import { Flight } from '../../model/flight';
 
 
 @Component({
@@ -15,11 +16,15 @@ import { JsonPipe } from '@angular/common';
 })
 export class FlightEditComponent {
   private fb = inject(FormBuilder);
-  private route = inject(ActivatedRoute);
   private flightService = inject(FlightService);
 
-  protected id = 0;
-  protected showDetails = false;
+  protected id = input(0, {
+    transform: numberAttribute
+  });
+  protected showDetails = input(false, {
+    transform: booleanAttribute
+  });
+  protected flight = input.required<Flight>();
 
   editForm = this.fb.nonNullable.group({
     id: [0],
@@ -40,12 +45,10 @@ export class FlightEditComponent {
   });
 
   constructor() {
-    this.route.paramMap.subscribe(params => {
-      this.id = +(params.get('id') || 0);
-      this.showDetails = params.get('showDetails') === 'true';
-
-      this.load(this.id);
-    });
+    // effect(() => this.load(this.id()));
+    effect(
+      () => this.editForm.patchValue(this.flight())
+    );
   }
 
   protected save(): void {

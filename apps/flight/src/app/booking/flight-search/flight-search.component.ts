@@ -36,32 +36,6 @@ export class FlightSearchComponent {
     () => 'From ' + this.lazyFrom() + ' to ' + this.to() + '.'
   );
 
-  constructor() {
-    /* effect(() => {
-      const from = this.lazyFrom();
-      untracked(
-        () => this.search(from, this.to())
-      );
-    });
-    effect(
-      () => console.log(this.flightRoute())
-    ); */
-
-    /* setInterval(
-      () => console.log(this.flightRoute[SIGNAL])
-    , 10_000);
-
-    effect(
-      () => console.log(this.from(), this.to())
-    );
-
-    this.to.set('Madrid');
-    this.to.set('Lyon');
-    this.to.set('Oslo');
-    this.to.set('Barcelona');
-    this.to.set('Rom'); */
-  }
-
   search(): void {
     this.flightService?.find(this.from(), this.to())
       .subscribe(
