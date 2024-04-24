@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@flight-demo/luggage/domain": ["libs/luggage/domain/src/index.ts"],
+      "@flight-demo/luggage/feature-checkin": [
+        "libs/luggage/feature-checkin/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
