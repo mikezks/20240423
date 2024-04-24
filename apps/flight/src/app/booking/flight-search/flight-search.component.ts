@@ -45,8 +45,21 @@ export class FlightSearchComponent {
     });
     effect(
       () => console.log(this.flightRoute())
+    ); */
+
+    /* setInterval(
+      () => console.log(this.flightRoute[SIGNAL])
+    , 10_000);
+
+    effect(
+      () => console.log(this.from(), this.to())
     );
-    console.log(this.flightRoute[SIGNAL]); */
+
+    this.to.set('Madrid');
+    this.to.set('Lyon');
+    this.to.set('Oslo');
+    this.to.set('Barcelona');
+    this.to.set('Rom'); */
   }
 
   search(): void {
