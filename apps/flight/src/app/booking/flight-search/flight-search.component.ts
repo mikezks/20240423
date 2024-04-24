@@ -1,9 +1,12 @@
-import { Component, Injector, inject, runInInjectionContext } from '@angular/core';
-import { Flight } from '../../model/flight';
-import { FlightService } from '../services/flight.service';
-import { FlightCardComponent } from '../flight-card/flight-card.component';
 import { JsonPipe } from '@angular/common';
+import { Component, Injector, computed, effect, inject, signal, untracked } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
+import { Flight } from '../../model/flight';
+import { FlightCardComponent } from '../flight-card/flight-card.component';
+import { FlightService } from '../services/flight.service';
+import { debounceTime } from 'rxjs';
+import { SIGNAL } from '@angular/core/primitives/signals';
 
 
 @Component({
@@ -15,30 +18,41 @@ import { FormsModule } from '@angular/forms';
 })
 export class FlightSearchComponent {
   private flightService = inject(FlightService);
-  private injector = inject(Injector);
 
-  from = 'Hamburg';
-  to = 'Graz';
-  flights: Flight[] = [];
-  basket: Record<number, boolean> = {
+  from = signal('Hamburg');
+  lazyFrom$ = toObservable(this.from).pipe(
+    debounceTime(300)
+  );
+  lazyFrom = toSignal(this.lazyFrom$, {
+    initialValue: this.from()
+  });
+  to = signal('Graz');
+  flights = signal<Flight[]>([]);
+  basket = signal<Record<number, boolean>>({
     3: true,
     5: true
-  };
+  });
+  flightRoute = computed(
+    () => 'From ' + this.lazyFrom() + ' to ' + this.to() + '.'
+  );
 
   constructor() {
-    inject(FlightService);
+    /* effect(() => {
+      const from = this.lazyFrom();
+      untracked(
+        () => this.search(from, this.to())
+      );
+    });
+    effect(
+      () => console.log(this.flightRoute())
+    );
+    console.log(this.flightRoute[SIGNAL]); */
   }
 
   search(): void {
-
-    this.injector.get(FlightService);
-    runInInjectionContext(this.injector,
-      () => inject(FlightService)
-    );
-
-    this.flightService?.find(this.from, this.to)
+    this.flightService?.find(this.from(), this.to())
       .subscribe(
-        flights => this.flights = flights
+        flights => this.flights.set(flights)
       );
   }
 }
