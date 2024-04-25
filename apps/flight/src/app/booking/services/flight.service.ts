@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, lastValueFrom, tap } from 'rxjs';
 import { BASE_URL } from '../../app.token';
 import { Flight } from '../../model/flight';
 
@@ -19,6 +19,12 @@ export class FlightService {
 
     return this.http.get<Flight[]>(url, { params }).pipe(
       tap(flights => this.flights.set(flights))
+    );
+  }
+
+  findAsPromise(from: string, to: string): Promise<Flight[]> {
+    return lastValueFrom(
+      this.find(from, to)
     );
   }
 

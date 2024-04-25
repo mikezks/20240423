@@ -1,5 +1,5 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
-import { Flight } from "../../model/flight";
+import { Flight } from "../../../model/flight";
 import { bookingActions } from "./booking.actions";
 
 

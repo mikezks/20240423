@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Routes } from '@angular/router';
 import { map, of, switchMap } from 'rxjs';
-import { provideBookingFeature } from './+state/booking.provider';
+import { provideBookingFeature } from './+state/ngrx-store/booking.provider';
 import { FlightEditComponent } from './flight-edit/flight-edit.component';
 import { FlightSearchComponent } from './flight-search/flight-search.component';
 import { FlightService } from './services/flight.service';

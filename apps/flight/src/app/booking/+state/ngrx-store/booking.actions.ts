@@ -1,5 +1,5 @@
 import { createActionGroup, props } from '@ngrx/store';
-import { Flight } from '../../model/flight';
+import { Flight } from '../../../model/flight';
 
 
 export const bookingActions = createActionGroup({

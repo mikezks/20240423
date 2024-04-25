@@ -1,4 +1,4 @@
-import { FlightService } from './../services/flight.service';
+import { FlightService } from '../../services/flight.service';
 import { inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { bookingActions } from './booking.actions';

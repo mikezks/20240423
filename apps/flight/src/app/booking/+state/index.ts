@@ -1,3 +1,3 @@
 
-export * from './booking.facade';
-export * from './booking.provider';
+export * from './ngrx-store/booking.facade';
+export * from './ngrx-store/booking.provider';
