@@ -6,6 +6,7 @@ import { FlightService } from '../services/flight.service';
 import { JsonPipe } from '@angular/common';
 import { Flight } from '../../model/flight';
 import { AddressComponent } from '../../shared/controls/address/address.component';
+import { AddressCvaComponent } from '../../shared/controls/address-cva/address-cva.component';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { AddressComponent } from '../../shared/controls/address/address.componen
     standalone: true,
     imports: [
       FormsModule, ReactiveFormsModule, JsonPipe,
-      AddressComponent
+      AddressComponent, AddressCvaComponent
     ]
 })
 export class FlightEditComponent {
@@ -46,16 +47,17 @@ export class FlightEditComponent {
     ]],
     date: [new Date().toISOString()],
     delayed: [false],
-    address: new FormGroup({})
+    // address: new FormGroup({}),
+    addressCva: [
+      {
+        street: 'Main',
+        no: '3',
+        zip: '20000',
+        city: 'London',
+        country: 'UK'
+      }, [Validators.required]
+    ]
   });
-
-/*   {
-    street: 'Main',
-    no: '3',
-    zip: '20000',
-    city: 'London',
-    country: 'UK'
-  } */
 
   constructor() {
     // effect(() => this.load(this.id()));
@@ -63,7 +65,9 @@ export class FlightEditComponent {
       () => this.editForm.patchValue(this.flight())
     );
 
-    this.editForm.getRawValue()
+    this.editForm.getRawValue();
+
+    this.editForm.valueChanges.subscribe(console.log);
   }
 
   protected save(): void {

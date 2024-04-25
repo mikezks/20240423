@@ -1,0 +1,32 @@
+<form [formGroup]="addressForm">
+  <div class="form-group">
+    <label>Street:</label>
+    <input formControlName="street" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label>Number:</label>
+    <input formControlName="no" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label>Zip code:</label>
+    <input formControlName="zip" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label>City:</label>
+    <input formControlName="city" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label>Country:</label>
+    <input formControlName="country" class="form-control" />
+  </div>
+
+  <div class="form-group">
+    <button
+      (click)="updateAddress()"
+      [disabled]="!addressForm.valid"
+      class="btn btn-default"
+    >
+      Update address
+    </button>
+  </div>
+</form>
