@@ -33,16 +33,16 @@ export class FlightSearchComponent {
   });
 
   constructor() {
-    /* effect(() => {
+    effect(() => {
       const flights = this.bookingFacade.flights();
       untracked(
         () => patchState(this.localState, { flights })
       );
-    }); */
+    });
 
-    (rxMethod<Flight[]>(pipe(
+    /* (rxMethod<Flight[]>(pipe(
       tap(flights => patchState(this.localState, { flights }))
-    )))(this.bookingFacade.flights());
+    )))(this.bookingFacade.flights()); */
   }
 
   updateFilter(filter: Partial<FlightFilter>): void{

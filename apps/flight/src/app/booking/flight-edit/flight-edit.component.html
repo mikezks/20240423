@@ -17,6 +17,7 @@
         <label>From:</label>
         <input formControlName="from" class="form-control">
       </div>
+
       @if (editForm.controls.from.invalid) {
         <div
           class="alert alert-danger"
@@ -74,14 +75,21 @@
         <label>Date:</label>
         <input formControlName="date" class="form-control">
       </div>
+
+      <app-address formGroupName="address"></app-address>
       <div class="form-group">
         <button
           (click)="save()"
           class="btn btn-default"
-          >
+          [disabled]="editForm.invalid"
+        >
           Save
         </button>
       </div>
     </form>
+
+
+    <!-- <app-address></app-address> -->
+
   </div>
 </div>

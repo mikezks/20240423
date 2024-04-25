@@ -1,10 +1,11 @@
 import { Component, booleanAttribute, effect, inject, input, numberAttribute, untracked } from '@angular/core';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { validateCity, validateCityWithParams } from '../../shared/validation/city-validator';
 import { FlightService } from '../services/flight.service';
 import { JsonPipe } from '@angular/common';
 import { Flight } from '../../model/flight';
+import { AddressComponent } from '../../shared/controls/address/address.component';
 
 
 @Component({
@@ -12,7 +13,10 @@ import { Flight } from '../../model/flight';
     templateUrl: './flight-edit.component.html',
     styleUrl: './flight-edit.component.scss',
     standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, JsonPipe]
+    imports: [
+      FormsModule, ReactiveFormsModule, JsonPipe,
+      AddressComponent
+    ]
 })
 export class FlightEditComponent {
   private fb = inject(FormBuilder);
@@ -42,13 +46,24 @@ export class FlightEditComponent {
     ]],
     date: [new Date().toISOString()],
     delayed: [false],
+    address: new FormGroup({})
   });
+
+/*   {
+    street: 'Main',
+    no: '3',
+    zip: '20000',
+    city: 'London',
+    country: 'UK'
+  } */
 
   constructor() {
     // effect(() => this.load(this.id()));
     effect(
       () => this.editForm.patchValue(this.flight())
     );
+
+    this.editForm.getRawValue()
   }
 
   protected save(): void {

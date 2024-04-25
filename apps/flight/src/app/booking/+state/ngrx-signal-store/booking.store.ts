@@ -61,6 +61,3 @@ export const BookingStore = signalStore(
     ))
   }))
 );
-
-
-new BookingStore().loadFlightRx(of({ from: '', to: ''}))
