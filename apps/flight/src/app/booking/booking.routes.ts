@@ -1,15 +1,18 @@
-import { ActivatedRoute, ActivatedRouteSnapshot, Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { ActivatedRouteSnapshot, Routes } from '@angular/router';
+import { map, of, switchMap } from 'rxjs';
+import { provideBookingFeature } from './+state/booking.provider';
 import { FlightEditComponent } from './flight-edit/flight-edit.component';
 import { FlightSearchComponent } from './flight-search/flight-search.component';
-import { inject } from '@angular/core';
 import { FlightService } from './services/flight.service';
-import { map, of, switchMap } from 'rxjs';
 
 
 export const BOOKING_ROUTES: Routes = [
   {
     path: '',
-    providers: [],
+    providers: [
+      provideBookingFeature()
+    ],
     children: [
       {
         path: 'flight',

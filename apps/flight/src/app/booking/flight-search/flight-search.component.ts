@@ -1,12 +1,10 @@
 import { JsonPipe } from '@angular/common';
-import { Component, Injector, computed, effect, inject, signal, untracked } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { Flight } from '../../model/flight';
-import { FlightCardComponent } from '../flight-card/flight-card.component';
-import { FlightService } from '../services/flight.service';
 import { debounceTime } from 'rxjs';
-import { SIGNAL } from '@angular/core/primitives/signals';
+import { injectBookingFacade } from '../+state';
+import { FlightCardComponent } from '../flight-card/flight-card.component';
 
 
 @Component({
@@ -17,8 +15,7 @@ import { SIGNAL } from '@angular/core/primitives/signals';
     imports: [FormsModule, FlightCardComponent, JsonPipe]
 })
 export class FlightSearchComponent {
-  private flightService = inject(FlightService);
-
+  bookingFacade = injectBookingFacade();
   from = signal('Hamburg');
   lazyFrom$ = toObservable(this.from).pipe(
     debounceTime(300)
@@ -27,7 +24,7 @@ export class FlightSearchComponent {
     initialValue: this.from()
   });
   to = signal('Graz');
-  flights = signal<Flight[]>([]);
+  flights = this.bookingFacade.flights;
   basket = signal<Record<number, boolean>>({
     3: true,
     5: true
@@ -37,9 +34,6 @@ export class FlightSearchComponent {
   );
 
   search(): void {
-    this.flightService?.find(this.from(), this.to())
-      .subscribe(
-        flights => this.flights.set(flights)
-      );
+    this.bookingFacade.search(this.from(), this.to());
   }
 }
