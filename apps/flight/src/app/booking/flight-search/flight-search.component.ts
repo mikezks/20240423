@@ -1,10 +1,13 @@
 import { JsonPipe } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { Component, effect, untracked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { debounceTime } from 'rxjs';
+import { patchState, signalState } from '@ngrx/signals';
 import { injectBookingFacade } from '../+state';
+import { FlightFilter } from '../+state/ngrx-signal-store/booking.store';
+import { Flight } from '../../model/flight';
 import { FlightCardComponent } from '../flight-card/flight-card.component';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { pipe, tap } from 'rxjs';
 
 
 @Component({
@@ -16,24 +19,45 @@ import { FlightCardComponent } from '../flight-card/flight-card.component';
 })
 export class FlightSearchComponent {
   bookingFacade = injectBookingFacade();
-  from = signal('Hamburg');
-  lazyFrom$ = toObservable(this.from).pipe(
-    debounceTime(300)
-  );
-  lazyFrom = toSignal(this.lazyFrom$, {
-    initialValue: this.from()
+
+  localState = signalState({
+    filter: {
+      from: 'Hamburg',
+      to: 'Graz'
+    },
+    flights: [] as Flight[],
+    basket: {
+      3: true,
+      5: true
+    } as Record<number, boolean>
   });
-  to = signal('Graz');
-  flights = this.bookingFacade.flights;
-  basket = signal<Record<number, boolean>>({
-    3: true,
-    5: true
-  });
-  flightRoute = computed(
-    () => 'From ' + this.lazyFrom() + ' to ' + this.to() + '.'
-  );
+
+  constructor() {
+    /* effect(() => {
+      const flights = this.bookingFacade.flights();
+      untracked(
+        () => patchState(this.localState, { flights })
+      );
+    }); */
+
+    (rxMethod<Flight[]>(pipe(
+      tap(flights => patchState(this.localState, { flights }))
+    )))(this.bookingFacade.flights());
+  }
+
+  updateFilter(filter: Partial<FlightFilter>): void{
+    patchState(this.localState, state => ({
+      filter: {
+        ...state.filter,
+        ...filter
+      }
+    }));
+  }
 
   search(): void {
-    this.bookingFacade.search(this.from(), this.to());
+    this.bookingFacade.search(
+      this.localState.filter.from(),
+      this.localState.filter.to()
+    );
   }
 }

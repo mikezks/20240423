@@ -7,14 +7,19 @@
     <form>
       <div class="form-group">
         <label>From:</label>
-        <input [(ngModel)]="from" name="from" class="form-control">
+        <input
+          [ngModel]="localState.filter.from()"
+          (ngModelChange)="updateFilter({ from: $event })"
+          name="from" class="form-control"
+        >
       </div>
       <div class="form-group">
         <label>To:</label>
-        <input [(ngModel)]="to" name="to" class="form-control">
-      </div>
-      <div class="form-group">
-        <p>{{ flightRoute() }}</p>
+        <input
+          [ngModel]="localState.filter.to()"
+          (ngModelChange)="updateFilter({ to: $event })"
+          name="to" class="form-control"
+        >
       </div>
 
       <div class="form-group">
@@ -26,13 +31,13 @@
   </div>
 </div>
 
-@if (flights().length) {
+@if (localState.flights().length) {
   <div class="row">
-    @for (flight of flights(); track flight.id) {
+    @for (flight of localState.flights(); track flight.id) {
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <app-flight-card
           [item]="flight"
-          [(selected)]="basket()[flight.id]" />
+          [selected]="localState.basket()[flight.id]" />
       </div>
     }
 
@@ -41,6 +46,6 @@
 
 <div class="card">
   <div class="card-body">
-    <pre>{{ basket() | json }}</pre>
+    <pre>{{ localState.basket() | json }}</pre>
   </div>
 </div>
